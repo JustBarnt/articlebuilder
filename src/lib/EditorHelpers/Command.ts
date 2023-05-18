@@ -114,16 +114,10 @@ export class Command {
                 return this.editor.commands.mergeCells();
             case 'SplitCell':
                 return this.editor.commands.splitCell();
-            case 'ToggleHeaderColumn':
-                return this.editor.commands.toggleHeaderColumn();
             case 'ToggleHeaderRow':
                 return this.editor.commands.toggleHeaderRow();
             case 'ToggleHeaderCell':
                 return this.editor.commands.toggleHeaderCell();
-            case 'MergeOrSplit':
-                return this.editor.commands.mergeOrSplit();
-            case 'FixTables':
-                return this.editor.commands.fixTables();
             default:
                 return this.editor.commands.insertTable(tableSettings);
           }

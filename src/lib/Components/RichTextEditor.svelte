@@ -2,6 +2,9 @@
     // Svelte Imports
     import {onMount, onDestroy} from 'svelte';
 
+    // Skeleton Imports
+    import { AppShell } from '@skeletonlabs/skeleton'; 
+
     // TipTap Imports
     import {Editor} from '@tiptap/core';
     import StarterKit from '@tiptap/starter-kit';
@@ -18,6 +21,7 @@
 
     //Local Import
     import { MarkText, Command, type Level } from '$lib/EditorHelpers/EditorHelpers';
+	import RichTextEditorNav from './RichTextEditorNav.svelte';
 
     //Locals
     let element: HTMLDivElement;
@@ -69,39 +73,14 @@
             command = undefined;
         }
     });
-
-    function handleHeading(event: Event ){
-        const button = event.target as HTMLButtonElement;
-        console.log(event);
-        return command?.Heading(parseInt(button.getAttribute('data-param') as string) as Level);
-    }
-
-    const handleParagraph = (event: Event) => command?.Paragraph();
-    const handleOrderedList = () => command?.OrderedList();
-    const handleBulletList = () => command?.BulletList();
-    const handleBold = () => markup?.Bold('Toggle');
-
-    // Reactives
-    //TODO: Convert to handling active in class.
-    $: headingsActive = (name: string, args?:{level: number}) => editor?.isActive(name, args) ? '!variant-filled-primary !ring-2 !ring-secondary-300/30' : '';
-    $: buttonClasses = 'btn-sm variant-ringed-tertiary ring-2 !rounded-md hover:variant-filled-secondary hover:ring-2 hover:ring-secondary-300/30';
 </script>
 
-<main class="variant-glass-secondary ring-2 ring-surface-500/70 h-4/5 w-full p-4 space-y-4 flex flex-col rounded-md">
-    <nav class="list-nav flex flex-row space-x-2">
-        {#if editor}
-            <button class="{buttonClasses} {headingsActive('heading', { level: 1 })}" on:click={handleHeading} data-param="1">Heading 1</button>
-            <button class="{buttonClasses} {headingsActive('heading', { level: 2 })}" on:click={handleHeading} data-param="2">Heading 2</button>
-            <button class="{buttonClasses} {headingsActive('heading', { level: 3 })}" on:click={handleHeading} data-param="3">Heading 3</button>
-            <button class="{buttonClasses} {headingsActive('paragraph', undefined)}" on:click={handleParagraph}>Paragraph</button>
-            <button class="{buttonClasses} {headingsActive('orderedList', undefined)}" on:click={handleOrderedList}>Ordered List</button>
-            <button class="{buttonClasses} {headingsActive('bulletList', undefined)}" on:click={handleBulletList}>Bulleted List</button>
-            <span class="divider-vertical border-l-2 !border-white m-0" />
-            <button class="{buttonClasses} {headingsActive('bold', undefined)} on:click={handleBold}">Bold</button>
-        {/if}
-    </nav>
-    
-    <content class="variant-glass-primary w-full h-full shadow-innerXl ring-2 ring-tertiary-500 ring-opacity-50 rounded-md" >
+<AppShell class="!overflow-visible w-full p-2 space-y-4 rounded-md" slotSidebarLeft="!overflow-visible p-2 w-28" regionPage="hide-scrollbar">
+    <svelte:fragment slot="sidebarLeft">
+        <RichTextEditorNav editor={editor} markup={markup} command={command} />
+    </svelte:fragment>
+
+    <content class="variant-glass-primary w-full h-full" >
         <div class="w-full h-full" bind:this={element} />
     </content>
-</main>
+</AppShell>
