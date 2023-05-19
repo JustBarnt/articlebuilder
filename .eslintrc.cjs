@@ -28,6 +28,7 @@ module.exports = {
 		}
 	],
     rules:{
+        'no-self-assign': 0,
         '@typescript-eslint/no-inferrable-types': 0,
     }
 };

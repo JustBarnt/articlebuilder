@@ -3,6 +3,4 @@
 </script>
 <!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
 
-<div class="h-screen flex">
-    <RichTextEditor />
-</div>
+<RichTextEditor />
